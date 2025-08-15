@@ -9,47 +9,62 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    
     let viewModel: ProductViewModel
+    
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
     var body: some View {
         NavigationStack {
-            if viewModel.isLoading {
-                ProgressView()
-            } else if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundStyle(.red)
-            } else {
-                List {
-                    // MARK: SECTION FOR HIGHLIGHT CHARACTER
-                    if let product = viewModel.product {
-                        Section(header: Text("Highlight")) {
-                            ProductCardComponentLarge(product: product)
+            ScrollView{
+                VStack(alignment: .leading, spacing: 16) {
+                    if viewModel.isLoading {
+                        ProgressView()
+                    } else if let errorMessage = viewModel.errorMessage {
+                        Text(errorMessage)
+                            .foregroundStyle(.red)
+                    } else {
+                        
+                        if let product = viewModel.product {
+                            Section(header: Text("Deals of the day")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                    
+                            ) {
+                                ProductCardComponentLarge(product: product)
+                            }
                         }
-                    }
-                    
-                    // MARK: SECTION FOR CHARACTERS
-                    Section(header: Text("All Products")) {
-                        ForEach(viewModel.products) { product in
-                            ProductCardComponentLarge(product: product)
+                        
+                        
+                        Section(header: Text("Top picks")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        ) {
+                            LazyVGrid(columns: columns, spacing: 16){
+                                ForEach(viewModel.products) {product in
+                                    ProductCardComponentMedium(product: product)
+                                }
+                            }
                         }
                     }
                 }
-                .navigationTitle("Products")
+                .navigationTitle("Home")
                 .refreshable {
                     await viewModel.loadProducts()
                 }
+                
             }
+            .padding(.top, 16)
+            .padding(.horizontal, 16)
         }
         .task {
             await viewModel.loadProducts()
         }
         
         
-           
+        
         
     }
 }
-
 #Preview {
     HomeScreen(viewModel: ProductViewModel(service: ProductService()))
 }

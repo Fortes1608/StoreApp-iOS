@@ -24,7 +24,7 @@ class ProductViewModel: ProductViewModelProtocol {
         isLoading = true
         
         do {
-            product = try await service.fetchProduct(id: 2)
+            product = try await service.fetchProduct(id: 32)
             products = try await service.fetchProducts()
         } catch {
             errorMessage = "Error to fetch Products: \(error.localizedDescription)"
