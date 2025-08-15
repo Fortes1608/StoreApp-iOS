@@ -11,8 +11,7 @@ import SwiftUI
 struct APIActivityApp: App {
     var body: some Scene {
         WindowGroup {
-            
-            
+            TabBar(viewModel: ProductViewModel(service: ProductService()))
         }
     }
 }
