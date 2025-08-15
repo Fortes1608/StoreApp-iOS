@@ -16,10 +16,14 @@ struct TabBar: View {
         TabView {
             
             Tab("Home", systemImage: "house.fill") {
-                HomeScreen(viewModel: viewModel)
+                NavigationStack {
+                    HomeScreen(viewModel: viewModel)
+                }
             }
             Tab("Category", systemImage: "square.grid.2x2.fill") {
-                
+                NavigationStack {
+                    CategoriesScreen(viewModel: viewModel)
+                }
             }
             Tab("Cart", systemImage: "cart.fill") {
                 
