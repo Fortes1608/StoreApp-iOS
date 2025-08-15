@@ -48,7 +48,7 @@ struct CategoryScreen: View {
                         // Grid de produtos
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(getFilteredProducts()) { product in
-                                
+                                ProductCardComponentMedium(product: product)
                             }
                         }
                         .padding(.horizontal)
