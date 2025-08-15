@@ -14,7 +14,6 @@ struct ProductCardComponentMedium: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
             ZStack(alignment: .topTrailing){
-                FavoriteButton()
                 AsyncImage(url: URL(string: product.thumbnailAPI)) { image in image
                         .resizable()
                         .scaledToFit()
@@ -27,6 +26,7 @@ struct ProductCardComponentMedium: View {
                         .frame(width: 160, height: 160)
                         .cornerRadius(8)
                 }
+                FavoriteButton()
             }
             
             VStack(alignment: .leading, spacing: 4){
