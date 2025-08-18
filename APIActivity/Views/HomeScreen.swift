@@ -31,7 +31,7 @@ struct HomeScreen: View {
                                 .fontWeight(.bold)
                                     
                             ) {
-                                ProductCardComponentLarge(product: product)
+                                ProductCardComponentLarge(viewModel: viewModel, product: product)
                                     .onTapGesture{
                                         self.selectedProduct = product
                                     }
@@ -39,6 +39,7 @@ struct HomeScreen: View {
                                         DetailsSheet(product: selectedProduct)
                                             .presentationDragIndicator(.visible)
                                     })
+
                             }
                         }
                         
@@ -49,7 +50,7 @@ struct HomeScreen: View {
                         ) {
                             LazyVGrid(columns: columns, spacing: 16){
                                 ForEach(viewModel.products) {product in
-                                    ProductCardComponentMedium(product: product)
+                                    ProductCardComponentMedium(viewModel: viewModel, product: product)
                                         .onTapGesture{
                                             self.selectedProduct = product
                                         }
@@ -57,6 +58,7 @@ struct HomeScreen: View {
                                             DetailsSheet(product: selectedProduct)
                                                 .presentationDragIndicator(.visible)
                                         })
+
                                 }
                             }
                         }

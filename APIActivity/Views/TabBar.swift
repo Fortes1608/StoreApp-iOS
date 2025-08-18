@@ -29,7 +29,9 @@ struct TabBar: View {
                 
             }
             Tab("Favorites", systemImage: "heart.fill") {
-                
+                NavigationStack {
+                    FavoritesScreen()
+                }
             }
             Tab("Orders", systemImage: "bag.fill") {
                 
@@ -41,6 +43,6 @@ struct TabBar: View {
     
 }
 
-#Preview {
-    TabBar(viewModel: ProductViewModel(service: ProductService()))
-}
+//#Preview {
+//    TabBar(viewModel: ProductViewModel(service: ProductService()))
+//}
