@@ -30,7 +30,7 @@ struct HomeScreen: View {
                                 .fontWeight(.bold)
                                     
                             ) {
-                                ProductCardComponentLarge(product: product)
+                                ProductCardComponentLarge(viewModel: viewModel, product: product)
                             }
                         }
                         
@@ -41,7 +41,7 @@ struct HomeScreen: View {
                         ) {
                             LazyVGrid(columns: columns, spacing: 16){
                                 ForEach(viewModel.products) {product in
-                                    ProductCardComponentMedium(product: product)
+                                    ProductCardComponentMedium(viewModel: viewModel, product: product)
                                 }
                             }
                         }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductCardComponentLarge: View {
+    var viewModel: ProductViewModel
     var product: Product
     var body: some View {
         HStack(spacing: 16){
@@ -38,7 +39,7 @@ struct ProductCardComponentLarge: View {
                             .textCase(.uppercase)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     
-                    FavoriteButton()
+                    FavoriteButton(product: product, viewModel: viewModel)
                 }
                 
                 
@@ -65,7 +66,7 @@ struct ProductCardComponentLarge: View {
 
 #Preview {
     ProductCardComponentLarge(
-        product: Product(
+        viewModel: ProductViewModel(service: ProductService()), product: Product(
             idAPI: 1,
             titleAPI: "Essence Mascara Lash Princess",
             descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",

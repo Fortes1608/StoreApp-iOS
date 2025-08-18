@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductListCartComponent: View {
     
     var product: Product
+    var viewModel: ProductViewModel
     
     var body: some View {
         HStack(spacing: 16) {
@@ -107,6 +108,6 @@ struct ProductListCartComponent: View {
             priceAPI: 9.99,
             ratingAPI: 4.94,
             thumbnailAPI: ""
-        )
+        ), viewModel: ProductViewModel(service: ProductService())
     )
 }
