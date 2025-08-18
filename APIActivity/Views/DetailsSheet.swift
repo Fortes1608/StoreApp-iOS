@@ -51,13 +51,29 @@ struct DetailsSheet: View {
                             .font(.body)
                             .foregroundStyle(.secondary)
                     }
-                }}
+                }
+                .navigationTitle(Text("Details"))
+                .navigationBarTitleDisplayMode(.inline)
+            }
             .padding(.horizontal, 16)
             
+            Button{
+                
+            }label:{
+            Text("Add to Cart")
+                    .frame(width: 361, height: 54)
+                    .font(.body)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.labelsPrimary)
+                    .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .tint(.fillsTertiary)
+                    )
+            }
             
         }
-        .navigationTitle(Text("Details"))
-        .navigationBarTitleDisplayMode(.inline)
+        
+        
         
 }
 }

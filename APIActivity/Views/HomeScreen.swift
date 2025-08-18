@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
+    @State private var selectedProduct: Product?
     
     let viewModel: ProductViewModel
     
@@ -31,6 +32,13 @@ struct HomeScreen: View {
                                     
                             ) {
                                 ProductCardComponentLarge(product: product)
+                                    .onTapGesture{
+                                        self.selectedProduct = product
+                                    }
+                                    .sheet(item: self.$selectedProduct, content: { selectedProduct in
+                                        DetailsSheet(product: selectedProduct)
+                                            .presentationDragIndicator(.visible)
+                                    })
                             }
                         }
                         
@@ -42,6 +50,13 @@ struct HomeScreen: View {
                             LazyVGrid(columns: columns, spacing: 16){
                                 ForEach(viewModel.products) {product in
                                     ProductCardComponentMedium(product: product)
+                                        .onTapGesture{
+                                            self.selectedProduct = product
+                                        }
+                                        .sheet(item: self.$selectedProduct, content: { selectedProduct in
+                                            DetailsSheet(product: selectedProduct)
+                                                .presentationDragIndicator(.visible)
+                                        })
                                 }
                             }
                         }
@@ -55,6 +70,7 @@ struct HomeScreen: View {
             }
             .padding(.top, 16)
             .padding(.horizontal, 16)
+            
         }
         .task {
             await viewModel.loadProducts()

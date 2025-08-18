@@ -8,14 +8,13 @@
 import Foundation
 import SwiftData
 
-
-struct Cart{
-    var id: Int
+@Model
+class Cart: Identifiable{
+    var id : UUID = UUID()
     var products: [Product]
     var total: Double
     
-    init(id: Int, products: [Product], total: Double) {
-        self.id = id
+    init(products: [Product], total: Double) {
         self.products = products
         self.total = total
     }

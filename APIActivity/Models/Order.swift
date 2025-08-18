@@ -8,11 +8,12 @@
 import Foundation
 import SwiftData
 
-
-struct Order {
+@Model
+class Order: Identifiable{
+    var id: UUID = UUID()
     var cart: Cart
     var date: Date
-    
+
     init(cart: Cart, date: Date) {
         self.cart = cart
         self.date = date

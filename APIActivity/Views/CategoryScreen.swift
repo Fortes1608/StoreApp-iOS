@@ -12,6 +12,7 @@ struct CategoryScreen: View {
     let viewModel: ProductViewModel
     let productCategory: ProductCategory
     
+    @State private var selectedProduct : Product? 
     @State private var searchText = ""
     
     /// Filtra os produtos por categoria e texto de busca (título ou descrição)
@@ -49,6 +50,13 @@ struct CategoryScreen: View {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(getFilteredProducts()) { product in
                                 ProductCardComponentMedium(product: product)
+                                    .onTapGesture{
+                                        self.selectedProduct = product
+                                    }
+                                    .sheet(item: self.$selectedProduct, content: { selectedProduct in
+                                        DetailsSheet(product: selectedProduct)
+                                            .presentationDragIndicator(.visible)
+                                    })
                             }
                         }
                         .padding(.horizontal)

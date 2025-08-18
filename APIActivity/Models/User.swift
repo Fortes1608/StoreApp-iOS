@@ -8,7 +8,9 @@
 import Foundation
 import SwiftData
 
-struct User {
+
+struct User: Identifiable {
+    var id: UUID = UUID()
     var cart: Cart
     var orders: [Order]
     
