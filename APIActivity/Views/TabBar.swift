@@ -6,13 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct TabBar: View {
     
     let viewModel: ProductViewModel
-    
     var body: some View {
-        
+
         TabView {
             
             Tab("Home", systemImage: "house.fill") {
@@ -26,7 +26,9 @@ struct TabBar: View {
                 }
             }
             Tab("Cart", systemImage: "cart.fill") {
-                
+                NavigationStack {
+                    CartScreen()
+                }
             }
             Tab("Favorites", systemImage: "heart.fill") {
                 NavigationStack {

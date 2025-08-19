@@ -6,29 +6,36 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct FavoriteButton: View {
-    @State var isSelected: Bool = false
+    
+    
+    var viewModel: ProductViewModel
+    var product: Product
+    @StateObject var productData: ProductDataViewModel = ProductDataViewModel(service: .shared)
+    
     var body: some View {
-        Button{
-            isSelected.toggle()
+        Button {
+            productData.dataSource.setFavorite(product)
+            print("salvou no swift data")
+            print(productData.dataSource.fetchProducts().count)
         }label: {
-            Text(Image(systemName: isSelected ? "heart.fill" : "heart"))
-                .foregroundStyle(.labelsPrimary)
-                .font(.system(size: 20))
-                .fontWeight(.regular)
-                .padding(8)
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundStyle(.fillsTertiary)
-                )
+              
+                Text(Image(systemName: product.isFavorite ? "heart.fill" : "heart"))
+                    .foregroundStyle(.labelsPrimary)
+                    .font(.system(size: 20))
+                    .fontWeight(.regular)
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(.fillsTertiary)
+                    )
+            }
         }
-      
-            
-    }
         
 }
 
-#Preview {
-    FavoriteButton()
-}
+//#Preview {
+//    FavoriteButton(viewModel: ProductViewModel(service: ProductService()), isSelected: )
+//}

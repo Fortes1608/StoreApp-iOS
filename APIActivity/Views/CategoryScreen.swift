@@ -11,8 +11,7 @@ struct CategoryScreen: View {
     
     let viewModel: ProductViewModel
     let productCategory: ProductCategory
-    
-    @State private var selectedProduct : Product? 
+    @State private var selectedProduct : Product?
     @State private var searchText = ""
     
     /// Filtra os produtos por categoria e texto de busca (título ou descrição)
@@ -54,7 +53,7 @@ struct CategoryScreen: View {
                                         self.selectedProduct = product
                                     }
                                     .sheet(item: self.$selectedProduct, content: { selectedProduct in
-                                        DetailsSheet(product: selectedProduct)
+                                        DetailsSheet(product: selectedProduct, viewModel: viewModel)
                                             .presentationDragIndicator(.visible)
                                     })
                             }
@@ -75,9 +74,9 @@ struct CategoryScreen: View {
     }
 }
 
-#Preview {
-    CategoryScreen(
-        viewModel: ProductViewModel(service: ProductService()),
-        productCategory: ProductCategory.beauty
-    )
-}
+//#Preview {
+//    CategoryScreen(
+//        viewModel: ProductViewModel(service: ProductService()),
+//        productCategory: ProductCategory.beauty
+//    )
+//}

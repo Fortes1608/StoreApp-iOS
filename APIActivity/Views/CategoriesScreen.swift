@@ -106,8 +106,8 @@ struct CategoriesScreen: View {
    
     }
 }
-
-#Preview {
-    CategoriesScreen(viewModel: ProductViewModel(service: ProductService()))
-}
-
+//
+//#Preview {
+//    CategoriesScreen(viewModel: ProductViewModel(service: ProductService()))
+//}
+//

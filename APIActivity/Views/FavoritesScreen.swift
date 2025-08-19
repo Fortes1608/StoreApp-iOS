@@ -10,24 +10,27 @@ import SwiftData
 
 // MARK: Favorites Screen
 struct FavoritesScreen: View {
-    
+    @Query(filter: #Predicate<Product> { $0.isFavorite == true })
+        var favorites: [Product]
     // seria feito de outra maneira daí, a gente faria uma var Query do usuário e pegaria a lista de favoritos
-    @Query(filter: #Predicate<Product> { $0.isFavorite == true }) var favorites: [Product]
+    @StateObject var productData: ProductDataViewModel = ProductDataViewModel(service: .shared)
 
     var body: some View {
         NavigationStack {
-            if favorites.isEmpty {
-                FavoritesScreenEmptyState()
-            } else {
-                // aqui botaria a lista de favoritos do usuário que está no SwiftData
-                ForEach(favorites) { product in
-                    ProductListFavoriteComponent(product: product)
-                        .padding(.vertical, 8)
+                if productData.dataSource.fetchProducts().isEmpty {
+                    FavoritesScreenEmptyState()
+                } else {
+                    ScrollView {
+                        // aqui botaria a lista de favoritos do usuário que está no SwiftData
+                        ForEach(favorites) { product in
+                                                ProductListFavoriteComponent(product: product)
+                                                    .padding(.vertical, 8)
+                        }
+                        .padding()
+                        .frame(alignment: .topLeading)
+                        .searchable(text: .constant(""), prompt: "Search")
+                    }
                 }
-                .padding()
-                .frame(alignment: .topLeading)
-                .searchable(text: .constant(""), prompt: "Search")
-            }
         }
         .navigationTitle("Favorites")
     }

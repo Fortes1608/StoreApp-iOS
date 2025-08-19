@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeScreen: View {
     @State private var selectedProduct: Product?
     
-    let viewModel: ProductViewModel
+    var viewModel: ProductViewModel
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
@@ -36,8 +36,8 @@ struct HomeScreen: View {
                                         self.selectedProduct = product
                                     }
                                     .sheet(item: self.$selectedProduct, content: { selectedProduct in
-                                        DetailsSheet(product: selectedProduct)
-                                            .presentationDragIndicator(.visible)
+                                        DetailsSheet(product: selectedProduct, viewModel: viewModel)
+//                                            .presentationDragIndicator(.visible(true))
                                     })
 
                             }
@@ -55,7 +55,7 @@ struct HomeScreen: View {
                                             self.selectedProduct = product
                                         }
                                         .sheet(item: self.$selectedProduct, content: { selectedProduct in
-                                            DetailsSheet(product: selectedProduct)
+                                            DetailsSheet(product: selectedProduct, viewModel: viewModel)
                                                 .presentationDragIndicator(.visible)
                                         })
 
@@ -83,6 +83,6 @@ struct HomeScreen: View {
         
     }
 }
-#Preview {
-    HomeScreen(viewModel: ProductViewModel(service: ProductService()))
-}
+//#Preview {
+//    HomeScreen(viewModel: ProductViewModel(service: ProductService()))
+//}

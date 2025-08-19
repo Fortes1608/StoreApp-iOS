@@ -39,7 +39,7 @@ struct ProductCardComponentLarge: View {
                             .textCase(.uppercase)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     
-                    FavoriteButton()
+                    FavoriteButton(viewModel: viewModel, product: product)
                 }
                 
                 
@@ -64,16 +64,16 @@ struct ProductCardComponentLarge: View {
     }
 }
 
-#Preview {
-    ProductCardComponentLarge(
-        viewModel: ProductViewModel(service: ProductService()), product: Product(
-            idAPI: 1,
-            titleAPI: "Essence Mascara Lash Princess",
-            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-            categoryAPI: "beauty",
-            priceAPI: 9.99,
-            ratingAPI: 4.94,
-            thumbnailAPI: ""
-        )
-    )
-}
+//#Preview {
+//    ProductCardComponentLarge(
+//        viewModel: ProductViewModel(service: ProductService()), product: Product(
+//            idAPI: 1,
+//            titleAPI: "Essence Mascara Lash Princess",
+//            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+//            categoryAPI: "beauty",
+//            priceAPI: 9.99,
+//            ratingAPI: 4.94,
+//            thumbnailAPI: ""
+//        )
+//    )
+//}

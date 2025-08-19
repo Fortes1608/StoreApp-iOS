@@ -21,8 +21,10 @@ class Product: Decodable{
     var priceAPI: Double
     var ratingAPI: Double
     var thumbnailAPI: String
-    var isFavorite: Bool = false
-    var quantity: Int = 0
+    var isFavorite: Bool
+    var quantity: Int
+    var isCart: Bool
+    var isOrdered: Bool
     
     required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -33,17 +35,25 @@ class Product: Decodable{
         self.priceAPI = try container.decode(Double.self, forKey: .priceAPI)
         self.ratingAPI = try container.decode(Double.self, forKey: .ratingAPI)
         self.thumbnailAPI = try container.decode(String.self, forKey: .thumbnailAPI)
+        self.isFavorite = false
+        self.quantity = 0
+        self.isCart = false
+        self.isOrdered = false
     }
     
     init (idAPI: Int, titleAPI: String, descriptionAPI: String, categoryAPI: String, priceAPI: Double, ratingAPI: Double, thumbnailAPI: String) {
-            self.idAPI = idAPI
-            self.titleAPI = titleAPI
-            self.descriptionAPI = descriptionAPI
-            self.categoryAPI = categoryAPI
-            self.priceAPI = priceAPI
-            self.ratingAPI = ratingAPI
-            self.thumbnailAPI = thumbnailAPI
-        }
+        self.idAPI = idAPI
+        self.titleAPI = titleAPI
+        self.descriptionAPI = descriptionAPI
+        self.categoryAPI = categoryAPI
+        self.priceAPI = priceAPI
+        self.ratingAPI = ratingAPI
+        self.thumbnailAPI = thumbnailAPI
+        self.isFavorite = false
+        self.quantity = 0
+        self.isCart = false
+        self.isOrdered = false
+    }
     
     enum CodingKeys: String, CodingKey {
         case idAPI = "id"
