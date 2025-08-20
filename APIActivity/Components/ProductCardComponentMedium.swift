@@ -10,12 +10,27 @@ import SwiftUI
 struct ProductCardComponentMedium: View {
     
     var viewModel: ProductViewModel
-    var product: Product
+    @ObservedObject var productData: ProductDataViewModel
+    var productDTO: ProductDTO   // DTO vindo da API
+    
+    // Transformação para Product do banco
+    private var product: Product {
+        Product(
+            idAPI: productDTO.id,
+            titleAPI: productDTO.title,
+            descriptionAPI: productDTO.description,
+            categoryAPI: productDTO.category,
+            priceAPI: productDTO.price,
+            ratingAPI: productDTO.rating,
+            thumbnailAPI: productDTO.thumbnail
+        )
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8){
             ZStack(alignment: .topTrailing){
-                AsyncImage(url: URL(string: product.thumbnailAPI)) { image in image
+                AsyncImage(url: URL(string: product.thumbnailAPI)) { image in
+                    image
                         .resizable()
                         .scaledToFit()
                         .frame(width: 160, height: 160)
@@ -27,7 +42,9 @@ struct ProductCardComponentMedium: View {
                         .frame(width: 160, height: 160)
                         .cornerRadius(8)
                 }
-                FavoriteButton(viewModel: viewModel, product: product)
+                
+                // 🔹 Passando agora o Product persistido
+                FavoriteButton(productData: productData, product: product.toDTO())
             }
             
             VStack(alignment: .leading, spacing: 4){
@@ -35,29 +52,15 @@ struct ProductCardComponentMedium: View {
                     .font(.system(size: 15, weight: .regular))
                     .frame(height: 36)
                 Text("US$ \(product.priceAPI, specifier: "%.2f")")
-                    .font((.system(size: 17, weight: .semibold)))
+                    .font(.system(size: 17, weight: .semibold))
             }
-            
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 8)
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(.backgroundsSecondary))
-            ).frame(width: 177, height: 250)
-        
+        )
+        .frame(width: 177, height: 250)
     }
 }
-//#Preview {
-//    ProductCardComponentMedium(
-//        userModel: UserViewModel(), viewModel: ProductViewModel(service: ProductService()), product: Product(
-//            idAPI: 1,
-//            titleAPI: "Essence Mascara Lash Princess",
-//            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-//            categoryAPI: "beauty",
-//            priceAPI: 9.99,
-//            ratingAPI: 4.94,
-//            thumbnailAPI: ""
-//        )
-//    )
-//}

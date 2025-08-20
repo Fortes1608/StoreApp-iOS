@@ -9,10 +9,11 @@ import SwiftUI
 
 struct ProductCardComponentLarge: View {
     var viewModel: ProductViewModel
-    var product: Product
+    @ObservedObject var productData: ProductDataViewModel
+    var product: ProductDTO
     var body: some View {
         HStack(spacing: 16){
-            AsyncImage(url: URL(string: product.thumbnailAPI)) { image in image
+            AsyncImage(url: URL(string: product.thumbnail)) { image in image
                     .resizable()
                     .scaledToFit()
                     .frame(width: 160, height: 160)
@@ -33,21 +34,21 @@ struct ProductCardComponentLarge: View {
             VStack(alignment: .leading, spacing: 24){
                 HStack{
                     VStack{
-                        Text(product.categoryAPI)
+                        Text(product.category)
                             .font(.system(size: 13, weight: .regular))
                             .foregroundStyle(.labelsSecondary)
                             .textCase(.uppercase)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     
-                    FavoriteButton(viewModel: viewModel, product: product)
+                    FavoriteButton(productData: productData, product: product)
                 }
                 
                 
                 VStack(alignment: .leading){
-                    Text(product.titleAPI)
+                    Text(product.title)
                         .font(.system(size: 15, weight: .regular))
                         .lineLimit(2)
-                    Text("US$ \(product.priceAPI, specifier: "%.2f")")
+                    Text("US$ \(product.price, specifier: "%.2f")")
                         .font((.system(size: 17, weight: .semibold)))
                 }
                 .padding(.bottom, 32)
@@ -63,17 +64,3 @@ struct ProductCardComponentLarge: View {
         )
     }
 }
-
-//#Preview {
-//    ProductCardComponentLarge(
-//        viewModel: ProductViewModel(service: ProductService()), product: Product(
-//            idAPI: 1,
-//            titleAPI: "Essence Mascara Lash Princess",
-//            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-//            categoryAPI: "beauty",
-//            priceAPI: 9.99,
-//            ratingAPI: 4.94,
-//            thumbnailAPI: ""
-//        )
-//    )
-//}

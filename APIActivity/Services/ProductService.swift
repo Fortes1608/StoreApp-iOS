@@ -33,7 +33,7 @@ class ProductService: ProductServiceProtocol {
     }
     
     // MARK: Function to fetch all characters
-    func fetchProducts() async throws -> [Product] {
+    func fetchProducts() async throws -> [ProductDTO] {
         let urlString: String = "\(baseURL)/products"
         
         guard let url = URL(string: urlString) else {

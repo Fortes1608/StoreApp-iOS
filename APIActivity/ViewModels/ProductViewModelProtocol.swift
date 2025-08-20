@@ -9,7 +9,7 @@ import Foundation
 
 protocol ProductViewModelProtocol {
     var product: Product? { get }
-    var products: [Product] { get }
+    var products: [ProductDTO] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }
     func loadProducts() async

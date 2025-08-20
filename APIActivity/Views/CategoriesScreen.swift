@@ -39,6 +39,7 @@ struct CategoryItemView: View {
 struct CategoriesScreen: View {
     
     let viewModel: ProductViewModel
+    @ObservedObject var productData: ProductDataViewModel
     
     @State private var searchText = ""
     
@@ -75,7 +76,7 @@ struct CategoriesScreen: View {
                     LazyHStack(spacing: 12) {
                         ForEach(filteredCategories) { category in
                             NavigationLink {
-                                CategoryScreen(viewModel: viewModel, productCategory: category)
+                                CategoryScreen(productData: productData, viewModel: viewModel, productCategory: category)
                             } label: {
                                 CategoryItemView(category: category)
                             }
@@ -88,7 +89,7 @@ struct CategoriesScreen: View {
 
                 List(filteredCategories) { category in
                     NavigationLink {
-                        CategoryScreen(viewModel: viewModel, productCategory: category)
+                        CategoryScreen(productData: productData, viewModel: viewModel, productCategory: category)
                     } label: {
                         Text(category.rawValue)
                             .lineLimit(1)

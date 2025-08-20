@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 import SwiftData
 
+import Foundation
+import SwiftUI
+import SwiftData
+
 class SwiftDataService: SwiftDataServiceProtocol {
     
     internal var modelContainer: ModelContainer
@@ -19,91 +23,73 @@ class SwiftDataService: SwiftDataServiceProtocol {
     
     @MainActor
     private init() {
-        // Change isStoredInMemoryOnly to false if you would like to see the data persistance after kill/exit the app
-        self.modelContainer = try! ModelContainer(for: Product.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        self.modelContainer = try! ModelContainer(
+            for: Product.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
         self.modelContext = modelContainer.mainContext
     }
     
+    // MARK: - Fetch
     func fetchProducts() -> [Product] {
         do {
-            // pra cada id puxar da api
             return try modelContext.fetch(FetchDescriptor<Product>())
         } catch {
             fatalError(error.localizedDescription)
         }
     }
     
+    func fetchFavorites() -> [Product] {
+        do {
+            let descriptor = FetchDescriptor<Product>(
+                predicate: #Predicate { $0.isFavorite == true }
+            )
+            return try modelContext.fetch(descriptor)
+        } catch {
+            fatalError("Failed to fetch favorites: \(error.localizedDescription)")
+        }
+    }
+
+    // MARK: - Insert & Remove
     func addProduct(_ product: Product) {
         modelContext.insert(product)
-        do {
-            try modelContext.save()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        saveContext()
     }
     
     func removeProduct(_ product: Product) {
         modelContext.delete(product)
-        do {
-            try modelContext.save()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
+        saveContext()
     }
     
+    // MARK: - Toggles
     func setFavorite(_ product: Product) {
-        
-        addProduct(product)
-        product.isFavorite = true
-        
+        toggleFlag(for: product, keyPath: \.isFavorite)
     }
     
     func setCart(_ product: Product) {
-        
-        var productExists: Bool = false
-        
-        for product in fetchProducts() where product == product {
-            productExists = true
-        }
-        
-        // se o produto nn existe ainda:
-        if productExists == false {
-            addProduct(product)
-            product.isCart = true
-        }
-        // se o produto existe e está no cart:
-        else if productExists && (product.isCart == true) {
-            product.isCart = false
-        }
-        // se o produto existe e não está no cart:
-        else if productExists && (product.isCart == false) {
-            product.isCart = true
-        }
-        
+        toggleFlag(for: product, keyPath: \.isCart)
     }
     
     func setOrdered(_ product: Product) {
-        
-        var productExists: Bool = false
-        
-        for product in fetchProducts() where product == product {
-            productExists = true
-        }
-        
-        // se o produto nn existe ainda:
-        if productExists == false {
-            addProduct(product)
-            product.isOrdered = true
-        }
-        // se o produto existe e está no cart:
-        else if productExists && (product.isOrdered == true) {
-            product.isOrdered = false
-        }
-        // se o produto existe e não está no cart:
-        else if productExists && (product.isOrdered == false) {
-            product.isOrdered = true
-        }
-        
+        toggleFlag(for: product, keyPath: \.isOrdered)
     }
     
+    // MARK: - Helpers
+    private func toggleFlag(for product: Product, keyPath: ReferenceWritableKeyPath<Product, Bool>) {
+        if let existing = fetchProducts().first(where: { $0.id == product.id }) {
+            existing[keyPath: keyPath].toggle()
+        } else {
+            product[keyPath: keyPath] = true
+            addProduct(product)
+        }
+        saveContext()
+    }
+    
+    private func saveContext() {
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError("Failed to save context: \(error.localizedDescription)")
+        }
+    }
 }
