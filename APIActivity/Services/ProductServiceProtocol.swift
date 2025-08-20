@@ -6,6 +6,6 @@
 //
 
 protocol ProductServiceProtocol{
-    func fetchProduct(id: Int) async throws -> Product
+    func fetchProduct(id: Int) async throws -> ProductDTO
     func fetchProducts() async throws -> [ProductDTO]
 }

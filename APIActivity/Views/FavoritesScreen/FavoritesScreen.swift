@@ -26,10 +26,14 @@ struct FavoritesScreen: View {
                     .frame(alignment: .topLeading)
                     .searchable(text: .constant(""), prompt: "Search")
                 }
+                .onAppear {
+                    self.productData.refreshFavorites()
+                }
             }
         }
         .navigationTitle("Favorites")
     }
+        
 }
 
 // MARK: Empty State

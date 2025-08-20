@@ -13,7 +13,7 @@ class ProductService: ProductServiceProtocol {
     private let baseURL = "https://dummyjson.com"
     
     // MARK: Function to fetch x4only one character based on number
-    func fetchProduct(id: Int) async throws -> Product {
+    func fetchProduct(id: Int) async throws -> ProductDTO {
         let urlString: String = "\(baseURL)/products/\(id)"
         
         guard let url = URL(string: urlString) else {
@@ -27,7 +27,7 @@ class ProductService: ProductServiceProtocol {
             throw URLError(.badServerResponse)
         }
         
-        let productResponse = try JSONDecoder().decode(Product.self, from: data)
+        let productResponse = try JSONDecoder().decode(ProductDTO.self, from: data)
         
         return productResponse
     }

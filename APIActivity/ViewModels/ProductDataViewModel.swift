@@ -17,28 +17,46 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
     @Published var products: [Product] = []
     @Published var favorites: [Product] = []
     @Published var cart: [Product] = []
+    @Published var ordered: [Product] = []
     
     var dataSource: SwiftDataService
     
     init(service: SwiftDataService) {
         self.dataSource = service
-        self.products = service.fetchProducts()
+        loadAllData()
+    }
+    
+    func loadAllData() {
+        products = dataSource.fetchProducts()
+        favorites = dataSource.fetchFavorites()
+        //cart = dataSource.fetchCart()
+        //ordered = dataSource.fetchOrders()
+    }
+    
+    func refreshFavorites() {
+        favorites = dataSource.fetchFavorites()
+    }
+    func refreshCart() {
+        //cart = dataSource.fetchCart()
+    }
+    func refreshOrdered() {
+        //ordered = dataSource.fetchOrdered()
     }
     
     // MARK: - Actions
     func setFavorite(_ product: Product) {
         dataSource.setFavorite(product)
-        reloadProducts()
+        loadAllData()
     }
     
     func setCart(_ product: Product) {
         dataSource.setCart(product)
-        reloadProducts()
+        loadAllData()
     }
     
     func setOrdered(_ product: Product) {
         dataSource.setOrdered(product)
-        reloadProducts()
+        loadAllData()
     }
     
     // MARK: - Sync

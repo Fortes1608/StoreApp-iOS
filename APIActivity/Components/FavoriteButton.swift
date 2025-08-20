@@ -11,13 +11,14 @@ import SwiftData
 struct FavoriteButton: View {
     @ObservedObject var productData: ProductDataViewModel
     var product: ProductDTO
-    var product2 = Product()
     
     var body: some View {
         Button {
-            productData.setFavorite(product2.fromDTO(product))
+            let productToSave = Product(from: product)
+            productData.setFavorite(productToSave)
         } label: {
-            Image(systemName: product2.fromDTO(product).isFavorite ? "heart.fill" : "heart")
+            let isFavorite = productData.favorites.contains { $0.idAPI == product.id }
+            Image(systemName: isFavorite ? "heart.fill" : "heart")
                 .foregroundStyle(.labelsPrimary)
                 .font(.system(size: 20))
                 .fontWeight(.regular)

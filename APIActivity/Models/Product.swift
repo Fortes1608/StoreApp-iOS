@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Product: Decodable{
+class Product: Identifiable {
     var idAPI: Int
     var titleAPI: String
     var descriptionAPI: String
@@ -45,6 +45,20 @@ class Product: Decodable{
         self.priceAPI = priceAPI
         self.ratingAPI = ratingAPI
         self.thumbnailAPI = thumbnailAPI
+        self.isFavorite = false
+        self.quantity = 0
+        self.isCart = false
+        self.isOrdered = false
+    }
+    
+    init (from dto: ProductDTO) {
+        self.idAPI = dto.id
+        self.titleAPI = dto.title
+        self.descriptionAPI = dto.description
+        self.categoryAPI = dto.category
+        self.priceAPI = dto.price
+        self.ratingAPI = dto.rating
+        self.thumbnailAPI = dto.thumbnail
         self.isFavorite = false
         self.quantity = 0
         self.isCart = false

@@ -25,7 +25,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
     private init() {
         self.modelContainer = try! ModelContainer(
             for: Product.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true) // persistencia fora do app
         )
         self.modelContext = modelContainer.mainContext
     }
@@ -76,7 +76,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
     
     // MARK: - Helpers
     private func toggleFlag(for product: Product, keyPath: ReferenceWritableKeyPath<Product, Bool>) {
-        if let existing = fetchProducts().first(where: { $0.id == product.id }) {
+        if let existing = fetchProducts().first(where: { $0.idAPI == product.idAPI }) {
             existing[keyPath: keyPath].toggle()
         } else {
             product[keyPath: keyPath] = true

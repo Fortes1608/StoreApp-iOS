@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ProductViewModelProtocol {
-    var product: Product? { get }
+    var product: ProductDTO? { get }
     var products: [ProductDTO] { get }
     var isLoading: Bool { get }
     var errorMessage: String? { get }

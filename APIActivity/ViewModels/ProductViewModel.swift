@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 class ProductViewModel: ProductViewModelProtocol {
-    var product: Product?
+    var product: ProductDTO?
     var products: [ProductDTO] = []
     var isLoading: Bool = false
     var errorMessage: String?
