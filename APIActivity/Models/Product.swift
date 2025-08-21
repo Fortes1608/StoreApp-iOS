@@ -21,6 +21,7 @@ class Product: Identifiable {
     var quantity: Int
     var isCart: Bool
     var isOrdered: Bool
+    var date: Date
     
     required init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -32,9 +33,10 @@ class Product: Identifiable {
         self.ratingAPI = try container.decode(Double.self, forKey: .ratingAPI)
         self.thumbnailAPI = try container.decode(String.self, forKey: .thumbnailAPI)
         self.isFavorite = false
-        self.quantity = 0
+        self.quantity = 1
         self.isCart = false
         self.isOrdered = false
+        self.date = Date()
     }
     
     init (idAPI: Int, titleAPI: String, descriptionAPI: String, categoryAPI: String, priceAPI: Double, ratingAPI: Double, thumbnailAPI: String) {
@@ -46,9 +48,10 @@ class Product: Identifiable {
         self.ratingAPI = ratingAPI
         self.thumbnailAPI = thumbnailAPI
         self.isFavorite = false
-        self.quantity = 0
+        self.quantity = 1
         self.isCart = false
         self.isOrdered = false
+        self.date = Date()
     }
     
     init (from dto: ProductDTO) {
@@ -60,9 +63,10 @@ class Product: Identifiable {
         self.ratingAPI = dto.rating
         self.thumbnailAPI = dto.thumbnail
         self.isFavorite = false
-        self.quantity = 0
+        self.quantity = 1
         self.isCart = false
         self.isOrdered = false
+        self.date = Date()
     }
     
     init () {
@@ -74,9 +78,10 @@ class Product: Identifiable {
         self.ratingAPI = 0
         self.thumbnailAPI = ""
         self.isFavorite = false
-        self.quantity = 0
+        self.quantity = 1
         self.isCart = false
         self.isOrdered = false
+        self.date = Date()
     }
     
     enum CodingKeys: String, CodingKey {

@@ -10,7 +10,8 @@ import SwiftUI
 struct ProductListCartComponent: View {
     
     var product: Product
-    var viewModel: ProductViewModel
+    @ObservedObject var productData: ProductDataViewModel
+//    var viewModel: ProductViewModel
     
     var body: some View {
         HStack(spacing: 16) {
@@ -97,17 +98,17 @@ struct ProductListCartComponent: View {
 }
 
 
-// MARK: Preview
-#Preview {
-    ProductListCartComponent(
-        product: Product(
-            idAPI: 1,
-            titleAPI: "Essence Mascara Lash Princess",
-            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-            categoryAPI: "beauty",
-            priceAPI: 9.99,
-            ratingAPI: 4.94,
-            thumbnailAPI: ""
-        ), viewModel: ProductViewModel(service: ProductService())
-    )
-}
+//// MARK: Preview
+//#Preview {
+//    ProductListCartComponent(
+//        product: Product(
+//            idAPI: 1,
+//            titleAPI: "Essence Mascara Lash Princess",
+//            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+//            categoryAPI: "beauty",
+//            priceAPI: 9.99,
+//            ratingAPI: 4.94,
+//            thumbnailAPI: ""
+//        )
+//    )
+//}

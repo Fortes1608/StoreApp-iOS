@@ -7,9 +7,22 @@
 
 import SwiftUI
 
+
+
 struct ProductListDeliveryComponent: View {
     
+    let myFormat = Date.FormatStyle()
+        .minute(.omitted)
+        .second(.omitted)
+        .year(.omitted)
+        .day(.defaultDigits)
+        .month(.wide)
+        .hour(.omitted)
+        .locale(Locale(identifier: "en_US"))
+    
     var product: Product
+    
+    var price: Double
     
     var body: some View {
         HStack(spacing: 16) {
@@ -32,20 +45,21 @@ struct ProductListDeliveryComponent: View {
             // product name & price
             VStack(alignment: .leading, spacing: 4) {
                 
-                Text("DELIVERY BY MONTH, 00") /// como eu vou saber isso? rever depois!
+                Text("DELIVERY BY \(product.date.formatted(myFormat))")
                     .textCase(.uppercase)
                     .font(Font.caption)
                     .foregroundStyle(Color(.secondaryLabel))
                 
                 Text(product.titleAPI)
                     .font(.footnote)
-                    .lineLimit(2)
+                    .lineLimit(1)
                     .truncationMode(.tail)
                     .multilineTextAlignment(.leading)
                 
-                Text("US$ \(product.priceAPI, specifier: "%.2f")")
+                Text("US$ \(price, specifier: "%.2f")")
                     .font(.headline)
             }
+            .padding(.trailing, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             
         }
@@ -58,16 +72,3 @@ struct ProductListDeliveryComponent: View {
     
 }
 
-#Preview {
-    ProductListDeliveryComponent(
-        product: Product(
-            idAPI: 1,
-            titleAPI: "Essence Mascara Lash Princess",
-            descriptionAPI: "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-            categoryAPI: "beauty",
-            priceAPI: 9.99,
-            ratingAPI: 4.94,
-            thumbnailAPI: ""
-        )
-    )
-}

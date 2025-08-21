@@ -49,7 +49,7 @@ struct CategoryScreen: View {
                         // Grid de produtos
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(getFilteredProducts()) { product in
-                                ProductCardComponentMedium(viewModel: viewModel, productData: productData, productDTO: product)
+                                ProductCardComponentMedium(productData: productData, productDTO: product)
                                     .onTapGesture{
                                         self.selectedProduct = product.fromDTO(product)
                                     }

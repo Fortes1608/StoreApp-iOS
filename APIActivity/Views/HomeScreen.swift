@@ -81,7 +81,6 @@ struct HomeScreen: View {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(viewModel.products) { product in
                     ProductCardComponentMedium(
-                        viewModel: viewModel,
                         productData: productData,
                         productDTO: product
                     )

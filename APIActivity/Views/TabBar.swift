@@ -29,7 +29,7 @@ struct TabBar: View {
             }
             Tab("Cart", systemImage: "cart.fill") {
                 NavigationStack {
-                    CartScreen()
+                    CartScreen(productData: productData)
                 }
             }
             Tab("Favorites", systemImage: "heart.fill") {
@@ -38,7 +38,9 @@ struct TabBar: View {
                 }
             }
             Tab("Orders", systemImage: "bag.fill") {
-                
+                NavigationStack{
+                    OrdersScreen(productData: productData)
+                }
             }
             
         }

@@ -13,5 +13,5 @@ protocol ProductDataViewModelProtocol {
     var dataSource: SwiftDataService { get set }
     func setFavorite(_ product: Product)
     func setCart(_ product: Product)
-    func setOrdered(_ product: Product)
+    func setOrdered(_ product: [Product])
 }

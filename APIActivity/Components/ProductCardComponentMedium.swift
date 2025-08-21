@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductCardComponentMedium: View {
     
-    var viewModel: ProductViewModel
+//    var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
     var productDTO: ProductDTO   // DTO vindo da API
     

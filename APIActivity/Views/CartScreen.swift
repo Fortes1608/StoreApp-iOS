@@ -9,12 +9,65 @@ import SwiftUI
 
 struct CartScreen: View {
     
+    @ObservedObject var productData: ProductDataViewModel
     var body: some View {
-        CartScreenEmptyState()
-            }
         
+        if productData.cart .isEmpty {
+            CartScreenEmptyState()
+        }
+        else {
+            ScrollView{
+                VStack(spacing:16){
+                    ForEach (productData.cart) { product in
+                        ProductListCartComponent(product: product, productData: productData)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .navigationTitle("Cart")
+            }
+            .padding(.top, 16)
+            VStack{
+                HStack{
+                    Text("Total")
+                        .font(.subheadline)
+                        .fontWeight(.regular)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text("US$: \(productData.totalPrice(), specifier: " %.2f")")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                    
+                        
+                }
+                Button{
+                    let productsToOrders = productData.cart
+                    productData.setOrdered(productsToOrders)
+                    NavigationLink("Orders", destination: OrdersScreen(productData: productData))
+                    productData.cart.removeAll()
+                    
+                }label: {
+                    Text("Checkout")
+                        .frame(width: 361, height: 54)
+                        .font(.body)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.labelsPrimary)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .tint(.fillsTertiary))
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+            .onAppear {
+                self.productData.refreshCart()
+            }
+        }
+        
+        
+        
+    }
 }
 
-#Preview {
-    CartScreen()
-}
+//#Preview {
+//    CartScreen()
+//}
