@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoryScreen: View {
+    @Binding var selectedTab: Int
     
     @ObservedObject var productData: ProductDataViewModel
     let viewModel: ProductViewModel
@@ -49,12 +50,12 @@ struct CategoryScreen: View {
                         // Grid de produtos
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(getFilteredProducts()) { product in
-                                ProductCardComponentMedium(viewModel: viewModel, productData: productData, productDTO: product)
+                                ProductCardComponentMedium(selectedTab: $selectedTab, viewModel: viewModel, productData: productData, productDTO: product)
                                     .onTapGesture{
                                         self.selectedProduct = product.fromDTO(product)
                                     }
                                     .sheet(item: self.$selectedProduct, content: { selectedProduct in
-                                        DetailsSheet(product: selectedProduct.toDTO(), viewModel: viewModel, productData: productData)
+                                        DetailsSheet(selectedTab: $selectedTab, product: selectedProduct.toDTO(), viewModel: viewModel, productData: productData)
                                             .presentationDragIndicator(.visible)
                                     })
                             }

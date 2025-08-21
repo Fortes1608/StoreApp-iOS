@@ -10,7 +10,21 @@ import SwiftData
 
 // MARK: Favorites Screen
 struct FavoritesScreen: View {
+    @Binding var selectedTab: Int
+
+    var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
+    @State private var searchText: String = ""
+    @State private var selectedProduct: Product? = nil  // produto selecionado
+    @State private var showDetailsSheet: Bool = false   // controla a sheet
+    
+    var filteredFavorites: [Product] {
+        if searchText.isEmpty {
+            return productData.favorites
+        } else {
+            return productData.favorites.filter { $0.titleAPI.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -18,23 +32,33 @@ struct FavoritesScreen: View {
                 FavoritesScreenEmptyState()
             } else {
                 ScrollView {
-                    ForEach(productData.favorites) { product in
-                        ProductListFavoriteComponent(product: product)
-                            .padding(.vertical, 8)
+                    ForEach(filteredFavorites) { product in
+                        ProductListFavoriteComponent(product: product) {
+                            // ação do botão de carrinho
+                            selectedProduct = product
+                            showDetailsSheet = true
+                        }
+                        .padding(.bottom, 8)
                     }
                     .padding()
                     .frame(alignment: .topLeading)
-                    .searchable(text: .constant(""), prompt: "Search")
                 }
+                .searchable(text: $searchText, prompt: "Search")
                 .onAppear {
-                    self.productData.refreshFavorites()
+                    self.productData.loadAllData()
                 }
             }
         }
         .navigationTitle("Favorites")
+        .sheet(isPresented: $showDetailsSheet) {
+            if let product = selectedProduct {
+                DetailsSheet(selectedTab: $selectedTab, product: product.toDTO(), viewModel: viewModel, productData: productData)
+                    .presentationDragIndicator(.visible)
+            }
+        }
     }
-        
 }
+
 
 // MARK: Empty State
 struct FavoritesScreenEmptyState: View {

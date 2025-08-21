@@ -22,7 +22,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
     static var shared = SwiftDataService()
     
     @MainActor
-    private init() {
+    init() {
         self.modelContainer = try! ModelContainer(
             for: Product.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true) // persistencia fora do app

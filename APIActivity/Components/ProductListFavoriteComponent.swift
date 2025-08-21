@@ -10,6 +10,7 @@ import SwiftUI
 struct ProductListFavoriteComponent: View {
     
     var product: Product
+    var onCartTapped: (() -> Void)?  // closure opcional para ação do botão
     
     var body: some View {
         HStack(spacing: 16) {
@@ -46,6 +47,7 @@ struct ProductListFavoriteComponent: View {
             // cart symbol
             Button {
                 // action
+                onCartTapped?()  // chama a ação externa
             } label: {
                 Image(systemName: "cart.fill")
                     .foregroundStyle(.labelsPrimary)

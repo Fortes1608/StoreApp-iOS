@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
+    @Binding var selectedTab: Int
     
     @ObservedObject var productData: ProductDataViewModel
     var viewModel: ProductViewModel
@@ -43,7 +44,7 @@ struct HomeScreen: View {
         }
         .sheet(item: $selectedProduct) { selectedProduct in
             DetailsSheet(
-                product: selectedProduct,
+                selectedTab: $selectedTab, product: selectedProduct,
                 viewModel: viewModel,
                 productData: productData
             )
@@ -61,7 +62,7 @@ struct HomeScreen: View {
                 .fontWeight(.bold)
             ) {
                 ProductCardComponentLarge(
-                    viewModel: viewModel,
+                    selectedTab: $selectedTab, viewModel: viewModel,
                     productData: productData,
                     product: firstProduct
                 )
@@ -81,7 +82,7 @@ struct HomeScreen: View {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(viewModel.products) { product in
                     ProductCardComponentMedium(
-                        viewModel: viewModel,
+                        selectedTab: $selectedTab, viewModel: viewModel,
                         productData: productData,
                         productDTO: product
                     )
