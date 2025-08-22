@@ -9,45 +9,57 @@ import SwiftUI
 import SwiftData
 
 struct TabBar: View {
-    
+    @State private var selectedTab = 0
+
     @ObservedObject var productData: ProductDataViewModel
     let viewModel: ProductViewModel
     
     var body: some View {
-
-        TabView {
+        TabView(selection: $selectedTab) {
             
-            Tab("Home", systemImage: "house.fill") {
-                NavigationStack {
-                    HomeScreen(productData: productData, viewModel: viewModel)
-                }
+            NavigationStack {
+                HomeScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel)
             }
-            Tab("Category", systemImage: "square.grid.2x2.fill") {
-                NavigationStack {
-                    CategoriesScreen(viewModel: viewModel, productData: productData)
-                }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
             }
-            Tab("Cart", systemImage: "cart.fill") {
-                NavigationStack {
-                    CartScreen(productData: productData)
-                }
-            }
-            Tab("Favorites", systemImage: "heart.fill") {
-                NavigationStack {
-                    FavoritesScreen(productData: productData)
-                }
-            }
-            Tab("Orders", systemImage: "bag.fill") {
-                NavigationStack{
-                    OrdersScreen(productData: productData)
-                }
-            }
+            .tag(0)
             
+            NavigationStack {
+                CategoriesScreen(selectedTab: $selectedTab, viewModel: viewModel, productData: productData)
+            }
+            .tabItem {
+                Label("Category", systemImage: "square.grid.2x2.fill")
+            }
+            .tag(2)
+            
+            NavigationStack {
+                CartScreen()
+            }
+            .tabItem {
+                Label("Cart", systemImage: "cart.fill")
+            }
+            .tag(3)
+            
+            NavigationStack {
+                FavoritesScreen(selectedTab: $selectedTab, viewModel: viewModel, productData: productData)
+            }
+            .tabItem {
+                Label("Favorites", systemImage: "heart.fill")
+            }
+            .tag(1)
+            
+            NavigationStack{
+                OrdersScreen(productData: productData)
+            }
+            .tabItem {
+                Label("Orders", systemImage: "bag.fill")
+            }
+            .tag(4)
         }
-        
     }
-    
 }
+
 
 //#Preview {
 //    TabBar(viewModel: ProductViewModel(service: ProductService()))

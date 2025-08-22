@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProductCardComponentLarge: View {
+    @Binding var selectedTab: Int
     var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
     var product: ProductDTO
@@ -40,7 +41,7 @@ struct ProductCardComponentLarge: View {
                             .textCase(.uppercase)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     
-                    FavoriteButton(productData: productData, product: product)
+                    FavoriteButton(productData: productData, product: product, selectedTab: $selectedTab)
                 }
                 
                 

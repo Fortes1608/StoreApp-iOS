@@ -9,10 +9,6 @@ import Foundation
 import SwiftUI
 import SwiftData
 
-import Foundation
-import SwiftUI
-import SwiftData
-
 class SwiftDataService: SwiftDataServiceProtocol {
     
     internal var modelContainer: ModelContainer
@@ -22,16 +18,12 @@ class SwiftDataService: SwiftDataServiceProtocol {
     static var shared = SwiftDataService()
     
     @MainActor
-    private init() {
-        do {
-            self.modelContainer = try ModelContainer(
-                for: Product.self,
-                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-            )
-            self.modelContext = modelContainer.mainContext
-        } catch {
-            fatalError("Failed to create ModelContainer: \(error.localizedDescription)")
-        }
+    init() {
+        self.modelContainer = try! ModelContainer(
+            for: Product.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true) // persistencia fora do app
+        )
+        self.modelContext = modelContainer.mainContext
     }
     
     // MARK: - Fetch

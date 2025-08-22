@@ -69,6 +69,20 @@ class Product: Identifiable {
         self.date = Date()
     }
     
+    init (from product: Product) {
+        self.idAPI = product.idAPI
+        self.titleAPI = product.titleAPI
+        self.descriptionAPI = product.descriptionAPI
+        self.categoryAPI = product.categoryAPI
+        self.priceAPI = product.priceAPI
+        self.ratingAPI = product.ratingAPI
+        self.thumbnailAPI = product.thumbnailAPI
+        self.isFavorite = product.isFavorite
+        self.quantity = product.quantity
+        self.isCart = product.isCart
+        self.isOrdered = product.isOrdered
+    }
+    
     init () {
         self.idAPI = 1
         self.titleAPI = ""

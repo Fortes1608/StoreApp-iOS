@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct ProductCardComponentMedium: View {
-    
-//    var viewModel: ProductViewModel
+    @Binding var selectedTab: Int
     @ObservedObject var productData: ProductDataViewModel
     var productDTO: ProductDTO   // DTO vindo da API
     
@@ -44,7 +43,7 @@ struct ProductCardComponentMedium: View {
                 }
                 
                 // 🔹 Passando agora o Product persistido
-                FavoriteButton(productData: productData, product: product.toDTO())
+                FavoriteButton(productData: productData, product: product.toDTO(), selectedTab: $selectedTab)
             }
             
             VStack(alignment: .leading, spacing: 4){

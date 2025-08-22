@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct DetailsSheet: View {
-    @Environment(\.dismiss) private var dismiss
-    var product: ProductDTO
+    var place: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis nec mauris ac placerat. Cras pulvinar dolor at orci semper hendrerit. Nam elementum leo vitae quam commodo, blandit ultricies diam malesuada. Suspendisse lacinia euismod quam interdum mollis. Pellentesque a eleifend ante. Aliquam tempus ultricies velit, eget consequat magna volutpat vitae. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris pulvinar vestibulum congue. Aliquam et magna ultrices justo condimentum varius."
+    @Binding var selectedTab: Int
+    var product: ProductDTO?
     var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
-    
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         NavigationStack{
             ScrollView{
@@ -31,7 +33,7 @@ struct DetailsSheet: View {
                                 .frame(width: 329, height: 329)
                                 .cornerRadius(8)
                         }
-                        FavoriteButton(productData: productData, product: product)
+                        FavoriteButton(productData: productData, product: product!, selectedTab: $selectedTab)
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 16)
