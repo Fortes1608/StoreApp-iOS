@@ -34,15 +34,16 @@ struct OrdersScreen: View {
                 .onAppear {
                     self.productData.refreshOrdered()
                 }
-                .onDisappear {
-                    for product in productData.ordered {
-                        product.quantity = 1
-                    }
-                }
+                
                 .padding(.top, 16)
                 .padding(.horizontal, 16)
                 .navigationTitle(Text("Orders"))
                 .searchable(text: $searchText, prompt: "Search")
+            }
+            .onDisappear {
+                for product in productData.ordered {
+                    product.quantity = 1
+                }
             }
         }
     }

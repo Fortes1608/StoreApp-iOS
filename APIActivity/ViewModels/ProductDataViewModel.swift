@@ -27,12 +27,10 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
     }
     
     func loadAllData() {
-        DispatchQueue.main.async {
             self.products = self.dataSource.fetchProducts()
             self.favorites = self.dataSource.fetchFavorites()
             self.cart = self.dataSource.fetchCart()
             self.ordered = self.dataSource.fetchOrders()
-        }
     }
     
     func refreshFavorites() {
@@ -48,23 +46,24 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
     // MARK: - Actions
     func setFavorite(_ product: Product) {
         dataSource.setFavorite(product)
-        // Aguardar um pouco antes de recarregar os dados para evitar problemas de estado
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.loadAllData()
-        }
+        self.loadAllData()
     }
     
     func setCart(_ product: Product) {
         dataSource.setCart(product)
-        // Aguardar um pouco antes de recarregar os dados para evitar problemas de estado
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.loadAllData()
-        }
+        self.loadAllData()
     }
     
     func setOrdered(_ product: [Product]) {
+        // Validação de segurança
+        guard !product.isEmpty else {
+            print("Error: No products to order")
+            return
+        }
+        
         dataSource.setOrdered(product)
-        loadAllData()
+        self.cart.removeAll()
+        self.loadAllData()
     }
     
     func totalPrice() -> Double {
@@ -80,9 +79,18 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
         return totalPrice
     }
     
-    // MARK: - Sync
-    private func reloadProducts() {
-        products = dataSource.fetchProducts()
+    // Função de debug para verificar o estado dos produtos
+    func debugProductStates() {
+        print("=== DEBUG: Product States ===")
+        print("Products in database: \(dataSource.fetchProducts().count)")
+        print("Cart items: \(cart.count)")
+        print("Favorites: \(favorites.count)")
+        print("Orders: \(ordered.count)")
+        
+        for product in dataSource.fetchProducts() {
+            print("Product \(product.idAPI): Cart=\(product.isCart), Ordered=\(product.isOrdered), Favorite=\(product.isFavorite), Qty=\(product.quantity)")
+        }
+        print("=== END DEBUG ===")
     }
 }
 

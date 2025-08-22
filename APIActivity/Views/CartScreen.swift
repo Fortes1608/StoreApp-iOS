@@ -12,7 +12,7 @@ struct CartScreen: View {
     @ObservedObject var productData: ProductDataViewModel
     var body: some View {
         
-        if productData.cart .isEmpty {
+        if productData.cart.isEmpty {
             CartScreenEmptyState()
         }
         else {
@@ -40,10 +40,19 @@ struct CartScreen: View {
                         
                 }
                 Button{
-                    let productsToOrders = productData.cart
+                    // Validar que o carrinho não está vazio
+                    guard !productData.cart.isEmpty else { return }
+                    
+                    // Criar uma cópia dos produtos para evitar problemas de referência
+                    let productsToOrders = productData.cart.map { Product(from: $0) }
+                    
+                    // Fazer checkout
                     productData.setOrdered(productsToOrders)
-                    NavigationLink("Orders", destination: OrdersScreen(productData: productData))
-                    productData.cart.removeAll()
+                    
+                    // Debug para verificar o estado após checkout
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        productData.debugProductStates()
+                    }
                     
                 }label: {
                     Text("Checkout")

@@ -12,7 +12,7 @@ import SwiftData
 struct FavoritesScreen: View {
     @Binding var selectedTab: Int
 
-    var viewModel: ProductViewModel
+    @ObservedObject var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
     @State private var searchText: String = ""
     @State private var selectedProduct: Product? = nil  // produto selecionado

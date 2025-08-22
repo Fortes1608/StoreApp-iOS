@@ -11,7 +11,7 @@ struct HomeScreen: View {
     @Binding var selectedTab: Int
     
     @ObservedObject var productData: ProductDataViewModel
-    var viewModel: ProductViewModel
+    @ObservedObject var viewModel: ProductViewModel
     
     @State private var selectedProduct: ProductDTO?
     
@@ -41,6 +41,9 @@ struct HomeScreen: View {
         }
         .task {
             await viewModel.loadProducts()
+        }
+        .onAppear {
+            productData.loadAllData()
         }
         .sheet(item: $selectedProduct) { selectedProduct in
             DetailsSheet(
@@ -82,7 +85,7 @@ struct HomeScreen: View {
             LazyVGrid(columns: columns, spacing: 16) {
                 ForEach(viewModel.products) { product in
                     ProductCardComponentMedium(
-                        selectedTab: $selectedTab, viewModel: viewModel,
+                        selectedTab: $selectedTab, 
                         productData: productData,
                         productDTO: product
                     )

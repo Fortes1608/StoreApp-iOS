@@ -10,10 +10,11 @@ import SwiftUI
 @main
 struct APIActivityApp: App {
     @StateObject var productData: ProductDataViewModel = ProductDataViewModel(service: .shared)
+    @StateObject var productViewModel: ProductViewModel = ProductViewModel(service: ProductService())
 
     var body: some Scene {
         WindowGroup {
-            TabBar(productData: productData, viewModel: ProductViewModel(service: ProductService()))
+            TabBar(productData: productData, viewModel: productViewModel)
         }
         .modelContainer(for: [Product.self])
     }

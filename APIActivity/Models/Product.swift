@@ -81,6 +81,7 @@ class Product: Identifiable {
         self.quantity = product.quantity
         self.isCart = product.isCart
         self.isOrdered = product.isOrdered
+        self.date = Date()
     }
     
     init () {
@@ -111,7 +112,7 @@ class Product: Identifiable {
 
 extension Product {
     func fromDTO(_ dto: ProductDTO) -> Product {
-        Product(
+        return Product(
             idAPI: dto.id,
             titleAPI: dto.title,
             descriptionAPI: dto.description,

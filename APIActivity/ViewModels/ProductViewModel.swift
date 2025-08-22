@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
-@Observable
-class ProductViewModel: ProductViewModelProtocol {
-    var product: ProductDTO?
-    var products: [ProductDTO] = []
-    var isLoading: Bool = false
-    var errorMessage: String?
+class ProductViewModel: ObservableObject, ProductViewModelProtocol {
+    @Published var product: ProductDTO?
+    @Published var products: [ProductDTO] = []
+    @Published var isLoading: Bool = false
+    @Published var errorMessage: String?
     
     private let service: ProductServiceProtocol
     
@@ -20,12 +20,14 @@ class ProductViewModel: ProductViewModelProtocol {
         self.service = service
     }
     
+    @MainActor
     func loadProducts() async {
         isLoading = true
         
         do {
             product = try await service.fetchProduct(id: 32)
             products = try await service.fetchProducts()
+            errorMessage = nil
         } catch {
             errorMessage = "Error to fetch Products: \(error.localizedDescription)"
         }

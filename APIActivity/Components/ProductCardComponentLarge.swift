@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductCardComponentLarge: View {
     @Binding var selectedTab: Int
-    var viewModel: ProductViewModel
+    @ObservedObject var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
     var product: ProductDTO
     var body: some View {

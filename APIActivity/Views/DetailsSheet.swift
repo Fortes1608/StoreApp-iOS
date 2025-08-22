@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct DetailsSheet: View {
-    var place: String = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lobortis nec mauris ac placerat. Cras pulvinar dolor at orci semper hendrerit. Nam elementum leo vitae quam commodo, blandit ultricies diam malesuada. Suspendisse lacinia euismod quam interdum mollis. Pellentesque a eleifend ante. Aliquam tempus ultricies velit, eget consequat magna volutpat vitae. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris pulvinar vestibulum congue. Aliquam et magna ultrices justo condimentum varius."
     @Binding var selectedTab: Int
-    var product: ProductDTO?
-    var viewModel: ProductViewModel
+    var product: ProductDTO
+    @ObservedObject var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
     @Environment(\.dismiss) private var dismiss
 
@@ -33,7 +32,7 @@ struct DetailsSheet: View {
                                 .frame(width: 329, height: 329)
                                 .cornerRadius(8)
                         }
-                        FavoriteButton(productData: productData, product: product!, selectedTab: $selectedTab)
+                        FavoriteButton(productData: productData, product: product, selectedTab: $selectedTab)
                     }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 16)
@@ -67,12 +66,10 @@ struct DetailsSheet: View {
                 // Adicionar ao carrinho de forma segura
                 productData.setCart(productToCart)
                 print("Added to Cart")
+                productData.refreshCart()
                 print(productData.cart)
+                dismiss()
                 
-                // Aguardar um pouco antes de fechar para evitar problemas de estado
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    dismiss()
-                }
             }label:{
                 Text("Add to Cart")
                     .frame(width: 361, height: 54)

@@ -86,14 +86,20 @@ struct ProductListCartComponent: View {
     }
     
     func increaseQuantity() {
-        product.quantity += 1
+        let newQuantity = product.quantity + 1
+        productData.dataSource.updateProductQuantity(productId: product.idAPI, newQuantity: newQuantity)
         print("product quantity increased")
+        // Atualizar a UI
+        productData.refreshCart()
     }
     
     func decreaseQuantity() {
         if product.quantity == 0 { return }
-        product.quantity -= 1
+        let newQuantity = product.quantity - 1
+        productData.dataSource.updateProductQuantity(productId: product.idAPI, newQuantity: newQuantity)
         print("product quantity decreased")
+        // Atualizar a UI
+        productData.refreshCart()
     }
 }
 

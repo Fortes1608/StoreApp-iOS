@@ -11,7 +11,7 @@ struct CategoryScreen: View {
     @Binding var selectedTab: Int
     
     @ObservedObject var productData: ProductDataViewModel
-    let viewModel: ProductViewModel
+    @ObservedObject var viewModel: ProductViewModel
     let productCategory: ProductCategory
     @State private var selectedProduct : Product?
     @State private var searchText = ""
@@ -50,7 +50,7 @@ struct CategoryScreen: View {
                         // Grid de produtos
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(getFilteredProducts()) { product in
-                                ProductCardComponentMedium(selectedTab: $selectedTab, viewModel: viewModel, productData: productData, productDTO: product)
+                                ProductCardComponentMedium(selectedTab: $selectedTab, productData: productData, productDTO: product)
                                     .onTapGesture{
                                         self.selectedProduct = product.fromDTO(product)
                                     }

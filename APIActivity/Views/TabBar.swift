@@ -12,7 +12,7 @@ struct TabBar: View {
     @State private var selectedTab = 0
 
     @ObservedObject var productData: ProductDataViewModel
-    let viewModel: ProductViewModel
+    @ObservedObject var viewModel: ProductViewModel
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -34,7 +34,7 @@ struct TabBar: View {
             .tag(2)
             
             NavigationStack {
-                CartScreen()
+                CartScreen(productData: productData)
             }
             .tabItem {
                 Label("Cart", systemImage: "cart.fill")

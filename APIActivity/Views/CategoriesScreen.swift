@@ -39,7 +39,7 @@ struct CategoryItemView: View {
 struct CategoriesScreen: View {
     @Binding var selectedTab: Int
     
-    let viewModel: ProductViewModel
+    @ObservedObject var viewModel: ProductViewModel
     @ObservedObject var productData: ProductDataViewModel
     
     @State private var searchText = ""
