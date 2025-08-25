@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class Product: Identifiable {
-    var idAPI: Int
+    @Attribute(.unique) var idAPI: Int
     var titleAPI: String
     var descriptionAPI: String
     var categoryAPI: String

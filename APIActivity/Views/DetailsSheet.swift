@@ -63,12 +63,10 @@ struct DetailsSheet: View {
                 // Criar uma cópia do produto para evitar problemas de referência
                 let productToCart = Product(from: product)
                 
-                // Adicionar ao carrinho de forma segura
                 productData.setCart(productToCart)
                 print("Added to Cart")
-                productData.refreshCart()
-                print(productData.cart)
                 dismiss()
+            
                 
             }label:{
                 Text("Add to Cart")

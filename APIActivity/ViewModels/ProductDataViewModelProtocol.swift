@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+
 protocol ProductDataViewModelProtocol {
     var products: [Product] { get set }
     var dataSource: SwiftDataService { get set }

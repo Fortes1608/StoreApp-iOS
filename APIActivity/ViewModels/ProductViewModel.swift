@@ -8,11 +8,13 @@
 import Foundation
 import SwiftUI
 
-class ProductViewModel: ObservableObject, ProductViewModelProtocol {
+@MainActor
+final class ProductViewModel: ObservableObject, ProductViewModelProtocol {
     @Published var product: ProductDTO?
     @Published var products: [ProductDTO] = []
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var isLoaded: Bool = false
     
     private let service: ProductServiceProtocol
     
@@ -20,7 +22,6 @@ class ProductViewModel: ObservableObject, ProductViewModelProtocol {
         self.service = service
     }
     
-    @MainActor
     func loadProducts() async {
         isLoading = true
         
@@ -33,5 +34,6 @@ class ProductViewModel: ObservableObject, ProductViewModelProtocol {
         }
         
         isLoading = false
+        isLoaded = true
     }
 }

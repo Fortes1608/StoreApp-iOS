@@ -19,6 +19,6 @@ protocol SwiftDataServiceProtocol {
     func setCart(_ product: Product)
     func setOrdered(_ product: [Product])
     func updateProductQuantity(productId: Int, newQuantity: Int)
-    func cleanupOrphanedProducts()
+//    func cleanupOrphanedProducts()
     
 }

@@ -40,7 +40,9 @@ struct HomeScreen: View {
             .padding(.horizontal, 16)
         }
         .task {
-            await viewModel.loadProducts()
+            if !viewModel.isLoaded {
+                await viewModel.loadProducts()
+            }
         }
         .onAppear {
             productData.loadAllData()

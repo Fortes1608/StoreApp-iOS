@@ -25,8 +25,15 @@ class SwiftDataService: SwiftDataServiceProtocol {
         self.modelContext = modelContainer.mainContext
     }
     
+    private func fetchProduct(by idAPI: Int) -> Product? {
+            let descriptor = FetchDescriptor<Product>(
+                predicate: #Predicate { $0.idAPI == idAPI }
+            )
+            return try? modelContext.fetch(descriptor).first
+        }
+    
     // MARK: - Fetch
-    func fetchProducts() -> [Product] {
+     func fetchProducts() -> [Product] {
         do {
             return try modelContext.fetch(FetchDescriptor<Product>())
         } catch {
@@ -35,7 +42,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
         }
     }
     
-    func fetchFavorites() -> [Product] {
+     func fetchFavorites() -> [Product] {
         do {
             let descriptor = FetchDescriptor<Product>(
                 predicate: #Predicate { $0.isFavorite == true }
@@ -47,7 +54,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
         }
     }
     
-    func fetchCart() -> [Product] {
+     func fetchCart() -> [Product] {
         do {
             let descriptor = FetchDescriptor<Product>(
                 predicate: #Predicate { $0.isCart == true }
@@ -59,7 +66,7 @@ class SwiftDataService: SwiftDataServiceProtocol {
         }
     }
     
-    func fetchOrders() -> [Product] {
+     func fetchOrders() -> [Product] {
         do {
             let descriptor = FetchDescriptor<Product>(
                 predicate: #Predicate { $0.isOrdered == true }
@@ -72,35 +79,37 @@ class SwiftDataService: SwiftDataServiceProtocol {
     }
 
     // MARK: - Insert & Remove
-    func addProduct(_ product: Product) {
+     func addProduct(_ product: Product) {
+        guard !fetchProducts().contains(where: { $0.idAPI == product.idAPI }) else { return }
         modelContext.insert(product)
         saveContext()
     }
     
-    func removeProduct(_ product: Product) {
+     func removeProduct(_ product: Product) {
+        guard fetchProducts().contains(where: { $0.idAPI == product.idAPI }) else { return }
         modelContext.delete(product)
         saveContext()
     }
     
     // MARK: - Toggles
-    func setFavorite(_ product: Product) {
-        // Verificar se o produto já existe
+     func setFavorite(_ product: Product) {
+        
         if let existing = fetchProducts().first(where: { $0.idAPI == product.idAPI }) {
-            // Se já existe, apenas toggle o flag de favorito
+            
             existing.isFavorite.toggle()
         } else {
-            // Se não existe, criar com isFavorite = true
+            let newProduct = product
             product.isFavorite = true
-            addProduct(product)
+            addProduct(newProduct)
         }
         saveContext()
     }
     
-    func updateProductQuantity(productId: Int, newQuantity: Int) {
+     func updateProductQuantity(productId: Int, newQuantity: Int) {
         if let existing = fetchProducts().first(where: { $0.idAPI == productId }) {
-            existing.quantity = max(0, newQuantity) // Garantir que quantidade não seja negativa
+            existing.quantity = max(0, newQuantity) 
             if existing.quantity == 0 {
-                existing.isCart = false // Remover do carrinho se quantidade for 0
+                existing.isCart = false
             }
             saveContext()
             print("Product \(productId) quantity updated to: \(existing.quantity)")
@@ -108,54 +117,39 @@ class SwiftDataService: SwiftDataServiceProtocol {
     }
     
     func setCart(_ product: Product) {
-        // Verificar se o produto já existe no banco
-        if let existing = fetchProducts().first(where: { $0.idAPI == product.idAPI }) {
-            // Se o produto já existe, verificar seu estado atual
-            if existing.isCart {
-                // Se já está no carrinho, apenas incrementar quantidade
-                existing.quantity += 1
-                print("Product already in cart, quantity increased to: \(existing.quantity)")
-            } else if existing.isOrdered {
-                // Se está em orders, criar uma nova instância para o carrinho
-                let newProduct = Product(from: existing)
-                newProduct.isCart = true
-                newProduct.isOrdered = false
-                newProduct.quantity = 1
-                addProduct(newProduct)
-                print("Product moved from orders to cart")
-            } else {
-                // Se não está no carrinho nem em orders, adicionar ao carrinho
-                existing.isCart = true
-                existing.quantity = 1
-                print("Product added to cart")
+            DispatchQueue.main.async {
+                if let existing = self.fetchProduct(by: product.idAPI) {
+                    if existing.isCart {
+                        existing.quantity += 1
+                        print("Product already in cart, quantity increased to: \(existing.quantity)")
+                    } else {
+                        existing.isCart = true
+                        existing.quantity = 1
+                        print("Product added to cart")
+                    }
+                } else {
+                    let newProduct = product
+                    newProduct.isCart = true
+                    newProduct.quantity = 1
+                    self.addProduct(newProduct)
+                    print("New product added to cart")
+                }
+                self.saveContext()
             }
-        } else {
-            // Se o produto não existe, criar com isCart = true
-            let newProduct = Product(from: product)
-            newProduct.isCart = true
-            newProduct.quantity = 1
-            addProduct(newProduct)
-            print("New product added to cart")
         }
-        saveContext()
-    }
     
-    func setOrdered(_ product: [Product]) {
+     func setOrdered(_ product: [Product]) {
         for p in product {
             if let existing = fetchProducts().first(where: { $0.idAPI == p.idAPI }) {
                 existing.isOrdered = true
-                existing.isCart = false // Remove do carrinho quando for para pedidos
-                existing.quantity = 1 // Reset quantidade para 1
+                existing.isCart = false
             } else {
                 p.isOrdered = true
                 p.isCart = false
-                p.quantity = 1 // Garantir que quantidade seja 1
                 addProduct(p)
             }
         }
         saveContext()
-        // Limpar produtos órfãos após operações de checkout
-        cleanupOrphanedProducts()
     }
     
     // MARK: - Helpers
@@ -169,21 +163,19 @@ class SwiftDataService: SwiftDataServiceProtocol {
             do {
                 modelContext.rollback()
                 print("Context rolled back successfully")
-            } catch {
-                print("Failed to rollback context: \(error.localizedDescription)")
             }
         }
     }
     
     // Função para limpar produtos órfãos (que não estão em nenhum estado válido)
-    func cleanupOrphanedProducts() {
-        let allProducts = fetchProducts()
-        for product in allProducts {
-            // Se o produto não está em nenhum estado válido, removê-lo
-            if !product.isFavorite && !product.isCart && !product.isOrdered {
-                removeProduct(product)
-            }
-        }
-        saveContext()
-    }
+//    func cleanupOrphanedProducts() {
+//        let allProducts = fetchProducts()
+//        for product in allProducts {
+//            // Se o produto não está em nenhum estado válido, removê-lo
+//            if !product.isFavorite && !product.isCart && !product.isOrdered {
+//                removeProduct(product)
+//            }
+//        }
+//        saveContext()
+//    }
 }

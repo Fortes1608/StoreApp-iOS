@@ -14,7 +14,11 @@ struct CartScreen: View {
         
         if productData.cart.isEmpty {
             CartScreenEmptyState()
+                .onAppear {
+                    productData.refreshCart()
+                }
         }
+        
         else {
             ScrollView{
                 VStack(spacing:16){
@@ -22,6 +26,7 @@ struct CartScreen: View {
                         ProductListCartComponent(product: product, productData: productData)
                     }
                 }
+                
                 .padding(.horizontal, 16)
                 .navigationTitle("Cart")
             }
@@ -40,19 +45,8 @@ struct CartScreen: View {
                         
                 }
                 Button{
-                    // Validar que o carrinho não está vazio
                     guard !productData.cart.isEmpty else { return }
-                    
-                    // Criar uma cópia dos produtos para evitar problemas de referência
-                    let productsToOrders = productData.cart.map { Product(from: $0) }
-                    
-                    // Fazer checkout
-                    productData.setOrdered(productsToOrders)
-                    
-                    // Debug para verificar o estado após checkout
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        productData.debugProductStates()
-                    }
+                    productData.setOrdered(productData.cart)
                     
                 }label: {
                     Text("Checkout")
@@ -67,15 +61,13 @@ struct CartScreen: View {
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 16)
-            .onAppear {
-                self.productData.refreshCart()
-            }
         }
         
         
         
     }
 }
+
 
 //#Preview {
 //    CartScreen()

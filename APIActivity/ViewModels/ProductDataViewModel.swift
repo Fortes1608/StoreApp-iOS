@@ -5,9 +5,6 @@
 //  Created by Bernardo Garcia Fensterseifer on 18/08/25.
 //
 
-import SwiftData
-import Foundation
-
 import Foundation
 import SwiftUI
 import SwiftData
@@ -27,10 +24,10 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
     }
     
     func loadAllData() {
-            self.products = self.dataSource.fetchProducts()
-            self.favorites = self.dataSource.fetchFavorites()
-            self.cart = self.dataSource.fetchCart()
-            self.ordered = self.dataSource.fetchOrders()
+            products = dataSource.fetchProducts()
+            favorites = dataSource.fetchFavorites()
+            cart = dataSource.fetchCart()
+            ordered = dataSource.fetchOrders()
     }
     
     func refreshFavorites() {
@@ -62,6 +59,7 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
         }
         
         dataSource.setOrdered(product)
+        self.loadAllData()
         self.cart.removeAll()
         self.loadAllData()
     }
