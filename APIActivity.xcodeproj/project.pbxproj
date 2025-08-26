@@ -25,20 +25,16 @@
 		86A8509F2E5E222C00855176 /* Exceptions for "APIActivityTests" folder in "APIActivity" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				APIActivityTests/MockProductService.swift,
-				APIActivityTests/MockSwiftDataService.swift,
-				APIActivityTests/ProductDataViewModelTests.swift,
-				"APIActivityTests/ProductViewModel-Tests.swift",
+				ProductDataViewModelTests.swift,
+				"ProductViewModel-Tests.swift",
 			);
 			target = 86A84E0B2E4D11FD00855176 /* APIActivity */;
 		};
 		86A850A02E5E222C00855176 /* Exceptions for "APIActivityTests" folder in "APIActivityTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				APIActivityTests/MockProductService.swift,
-				APIActivityTests/MockSwiftDataService.swift,
-				APIActivityTests/ProductDataViewModelTests.swift,
-				"APIActivityTests/ProductViewModel-Tests.swift",
+				ProductDataViewModelTests.swift,
+				"ProductViewModel-Tests.swift",
 			);
 			target = 86A84FF52E5CDC6F00855176 /* APIActivityTests */;
 		};
