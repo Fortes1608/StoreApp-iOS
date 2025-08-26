@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct APIActivityApp: App {
-    @StateObject var productData: ProductDataViewModel = ProductDataViewModel(service: .shared)
+    @StateObject var productData: ProductDataViewModel = ProductDataViewModel(service: SwiftDataService.shared)
     @StateObject var productViewModel: ProductViewModel = ProductViewModel(service: ProductService())
 
     var body: some Scene {

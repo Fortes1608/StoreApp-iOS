@@ -16,9 +16,9 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
     @Published var cart: [Product] = []
     @Published var ordered: [Product] = []
     
-    var dataSource: SwiftDataService
+    var dataSource: SwiftDataServiceProtocol
     
-    init(service: SwiftDataService) {
+    init(service: SwiftDataServiceProtocol) {
         self.dataSource = service
         loadAllData()
     }
@@ -75,20 +75,6 @@ class ProductDataViewModel: ObservableObject, ProductDataViewModelProtocol {
             }
         }
         return totalPrice
-    }
-    
-    // Função de debug para verificar o estado dos produtos
-    func debugProductStates() {
-        print("=== DEBUG: Product States ===")
-        print("Products in database: \(dataSource.fetchProducts().count)")
-        print("Cart items: \(cart.count)")
-        print("Favorites: \(favorites.count)")
-        print("Orders: \(ordered.count)")
-        
-        for product in dataSource.fetchProducts() {
-            print("Product \(product.idAPI): Cart=\(product.isCart), Ordered=\(product.isOrdered), Favorite=\(product.isFavorite), Qty=\(product.quantity)")
-        }
-        print("=== END DEBUG ===")
     }
 }
 
