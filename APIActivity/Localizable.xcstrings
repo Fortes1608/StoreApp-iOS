@@ -1,6 +1,72 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@, em promoção por %.2f reais" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, em promoção por %2$.2f reais"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, em promoção por %2$.2f reais"
+          }
+        }
+      }
+    },
+    "%@, in sale for %.2f dollars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, in sale for %2$.2f dollars"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, em desconto por %2$.2fdollars"
+          }
+        }
+      }
+    },
+    "%@, preço %.2f reais" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, preço %2$.2f reais"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@, preço %2$.2f reais"
+          }
+        }
+      }
+    },
+    "%@, price %.2f dollars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, price %2$.2f dollars"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@,preço %2$.2f dollars"
+          }
+        }
+      }
+    },
     "%lld" : {
       "localizations" : {
         "pt-BR" : {
@@ -31,12 +97,34 @@
         }
       }
     },
+    "Aguarde enquanto buscamos os produtos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aguarde enquanto buscamos os produtos"
+          }
+        }
+      }
+    },
     "Buy an item and it will show up here." : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Compre um item e irá aparecer aqui."
+          }
+        }
+      }
+    },
+    "Carregando produtos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando produtos"
           }
         }
       }
@@ -111,6 +199,27 @@
         }
       }
     },
+    "Detalhes do produto %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalhes do produto %@"
+          }
+        }
+      }
+    },
+    "Erro: %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro: %@"
+          }
+        }
+      }
+    },
     "Favorite an item and it will show up here." : {
       "localizations" : {
         "pt-BR" : {
@@ -137,6 +246,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Home"
+          }
+        }
+      }
+    },
+    "Home screen, swipe down to refresh the products" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tela inicial, deslize para baixo para atualizar os produtos"
+          }
+        }
+      }
+    },
+    "Loading products" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carregando produtos"
           }
         }
       }
@@ -171,6 +300,16 @@
         }
       }
     },
+    "Product details %@" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalhes dos produtos %@"
+          }
+        }
+      }
+    },
     "Search" : {
       "localizations" : {
         "pt-BR" : {
@@ -181,12 +320,55 @@
         }
       }
     },
+    "Tap twice to show details" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clique duas vezes para exibir detalhes"
+          }
+        }
+      }
+    },
+    "Tela inicial, deslize para baixo para atualizar os produtos" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tela inicial, deslize para baixo para atualizar os produtos"
+          }
+        }
+      }
+    },
     "Top picks" : {
       "localizations" : {
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Melhores escolhas"
+          }
+        }
+      }
+    },
+    "Toque duas vezes para abrir os detalhes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque duas vezes para abrir os detalhes"
+          }
+        }
+      }
+    },
+    "Toque duas vezes para ver os detalhes" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toque duas vezes para ver os detalhes"
           }
         }
       }
@@ -217,6 +399,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "R$: %.2f"
+          }
+        }
+      }
+    },
+    "Wait while loading products" : {
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aguarde enquanto atualizamos os produtos"
           }
         }
       }
