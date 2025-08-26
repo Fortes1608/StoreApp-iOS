@@ -30,6 +30,9 @@ struct CartScreen: View {
                 .padding(.horizontal, 16)
                 .navigationTitle("Cart")
             }
+            .onAppear {
+                productData.refreshCart()
+            }
             .padding(.top, 16)
             VStack{
                 HStack{

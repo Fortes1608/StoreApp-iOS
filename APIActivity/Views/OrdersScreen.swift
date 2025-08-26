@@ -11,8 +11,6 @@ struct OrdersScreen: View {
     @ObservedObject var productData: ProductDataViewModel
     @State private var searchText: String = ""
     
-    
-    
     var filteredOrdered: [Product] {
         if searchText.isEmpty {
             return productData.ordered
@@ -35,21 +33,23 @@ struct OrdersScreen: View {
                     VStack(spacing:16){
                         listProducts()
                     }
+                    
                     .padding(.top, 16)
                     .padding(.horizontal, 16)
                     .navigationTitle(Text("Orders"))
                     .searchable(text: $searchText, prompt: "Search")
                 }
-                .onAppear {
-                    self.productData.refreshOrdered()
-                }
-                .onDisappear {
-                    for product in productData.ordered {
-                        product.quantity = 1
-                    }
-                }
+//                .onAppear {
+//                    self.productData.refreshOrdered()
+//                }
+//                .onDisappear {
+//                    for product in productData.ordered {
+//                        product.quantity = 1
+//                    }
+//                }
             }
         }
+    
     }
     
     //#Preview {
