@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CategoryItemView: View {
     
+    
+    
     let category: ProductCategory
     
     var body: some View {
@@ -24,7 +26,7 @@ struct CategoryItemView: View {
                         .foregroundColor(.fillsSecondary)
                 )
             
-            Text(category.rawValue)
+            Text(category.localizedName)
                 .lineLimit(1)
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
@@ -56,25 +58,92 @@ struct CategoriesScreen: View {
         }
     }
     
+    @Environment(\.horizontalSizeClass) private var hSize
+    
     var body: some View {
-        
         NavigationStack {
-            VStack(spacing: 24) {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    TextField("Search", text: $searchText)
-                        .textFieldStyle(.plain)
+            if hSize == .regular {
+                CategoriesScreenIpad(selectedTab: $selectedTab, viewModel: viewModel, productData: productData)
+            } else {
+                
+                
+                VStack(spacing: 24) {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.secondary)
+                        TextField("Search", text: $searchText)
+                            .textFieldStyle(.plain)
+                    }
+                    .padding(8)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+                    .navigationTitle("Categories")
+                    
+                    // Carrossel horizontal clicável
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHStack(spacing: 12) {
+                            ForEach(filteredCategories) { category in
+                                NavigationLink {
+                                    CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
+                                } label: {
+                                    CategoryItemView(category: category)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .frame(height: 120)
+                    
+                    List(filteredCategories) { category in
+                        NavigationLink {
+                            CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
+                        } label: {
+                            Text(category.localizedName)
+                                .lineLimit(1)
+                                .foregroundStyle(.primary)
+                                .multilineTextAlignment(.leading)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 4)
+                        }
+                        
+                    }
+                    .listStyle(.plain)
                 }
-                .padding(8)
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-                .padding(.horizontal)
-                .navigationTitle("Categories")
-
-                // Carrossel horizontal clicável
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: 12) {
+                .background(Color(.systemBackground))
+            }
+            
+        }
+        
+    }
+    
+    struct CategoriesScreenIpad: View {
+        
+        @Binding var selectedTab: Int
+        
+        @ObservedObject var viewModel: ProductViewModel
+        @ObservedObject var productData: ProductDataViewModel
+        
+        @State private var searchText = ""
+        
+        private var categories: [ProductCategory] {
+            ProductCategory.allCases
+        }
+        
+        private var filteredCategories: [ProductCategory] {
+            if searchText.isEmpty {
+                return categories
+            } else {
+                return categories
+                    .filter { $0.rawValue.localizedCaseInsensitiveContains(searchText) }
+            }
+        }
+        
+        var body: some View {
+            NavigationStack {
+                VStack(spacing: 24) {
+                    LazyHStack(spacing: 16) {
                         ForEach(filteredCategories) { category in
                             NavigationLink {
                                 CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
@@ -84,28 +153,32 @@ struct CategoriesScreen: View {
                             .buttonStyle(PlainButtonStyle())
                         }
                     }
-                    .padding(.horizontal)
-                }
-                .frame(height: 120)
-
-                List(filteredCategories) { category in
-                    NavigationLink {
-                        CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
-                    } label: {
-                        Text(category.rawValue)
-                            .lineLimit(1)
-                            .foregroundStyle(.primary)
-                            .multilineTextAlignment(.leading)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 4)
+                    .padding(.top, 32)
+                    .padding(.horizontal, 32)
+                    .frame(height: 110)
+                    
+                    List(filteredCategories) { category in
+                        NavigationLink {
+                            CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
+                        } label: {
+                            Text(category.localizedName)
+                                .lineLimit(1)
+                                .foregroundStyle(.primary)
+                                .multilineTextAlignment(.leading)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 4)
+                            
+                        }
+                        
                     }
-
+                    
+                    .listStyle(.plain)
                 }
-                .listStyle(.plain)
+                .background(Color(.systemBackground))
             }
-            .background(Color(.systemBackground))
+            .navigationTitle("Categories")
+            
         }
-   
     }
 }
 //

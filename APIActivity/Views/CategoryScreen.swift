@@ -62,7 +62,7 @@ struct CategoryScreen: View {
                         }
                         .padding(.horizontal)
                 }
-                .navigationTitle(productCategory.rawValue)
+                .navigationTitle(productCategory.localizedName)
                 .navigationBarTitleDisplayMode(.inline)
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .refreshable {

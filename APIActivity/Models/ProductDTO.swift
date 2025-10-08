@@ -17,6 +17,7 @@ struct ProductDTO: Decodable, Identifiable {
     var price: Double
     var rating: Double
     var thumbnail: String
+
 }
 
 extension ProductDTO {
@@ -31,4 +32,5 @@ extension ProductDTO {
             thumbnailAPI: dto.thumbnail
         )
     }
+
 }

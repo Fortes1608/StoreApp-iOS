@@ -35,7 +35,7 @@ struct ProductCardComponentLarge: View {
             VStack(alignment: .leading, spacing: 24){
                 HStack{
                     VStack{
-                        Text(product.category)
+                        Text(product.fromDTO(product).categoryAPI)
                             .font(.system(size: 13, weight: .regular))
                             .foregroundStyle(.labelsSecondary)
                             .textCase(.uppercase)

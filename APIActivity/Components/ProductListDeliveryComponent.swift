@@ -18,7 +18,8 @@ struct ProductListDeliveryComponent: View {
         .day(.defaultDigits)
         .month(.wide)
         .hour(.omitted)
-        .locale(Locale(identifier: "en_US"))
+        .locale(.current)
+        
     
     var product: Product
     

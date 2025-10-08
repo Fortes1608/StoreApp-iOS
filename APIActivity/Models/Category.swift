@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum ProductCategory: String, Codable, Identifiable, CaseIterable {
     var id: String { rawValue }
@@ -87,4 +88,9 @@ enum ProductCategory: String, Codable, Identifiable, CaseIterable {
             return "watch.analog"
         }
     }
+    
+    var localizedName: LocalizedStringKey {
+            LocalizedStringKey(rawValue)
+        
+        }
 }
