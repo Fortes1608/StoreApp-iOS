@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CategoryItemView: View {
     
-    
-    
     let category: ProductCategory
     
     var body: some View {
@@ -33,6 +31,7 @@ struct CategoryItemView: View {
                 .frame(width: 80)
             
         }
+        
         
     }
     
@@ -167,7 +166,7 @@ struct CategoriesScreen: View {
                         }
                     .frame(height: 110)
                     
-                    List(filteredCategories.prefix(11)) { category in
+                    List(filteredCategories.prefix(8)) { category in
                         NavigationLink {
                             CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
                         } label: {

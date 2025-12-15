@@ -17,17 +17,16 @@ struct FavoriteButton: View {
     
     var body: some View {
         Button {
-            // Atualiza favorito
             productData.setFavorite(Product(from: product))
             
-            // Guarda aba atual
-            let currentTab = selectedTab
-            
-            // Muda para aba de favoritos (ex: 1) e volta imediatamente
-            selectedTab = 1 // índice da aba Favorites
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                selectedTab = currentTab
-            }
+//            // Guarda aba atual
+//            let currentTab = selectedTab
+//            
+//            // Muda para aba de favoritos (ex: 1) e volta imediatamente
+//            selectedTab = 1 // índice da aba Favorites
+//            DispatchQueue.main.asyncAfter(deadline: .now()) {
+//                selectedTab = currentTab
+//            }
         } label: {
             let isFavorite = productData.favorites.contains { $0.idAPI == product.id }
             Image(systemName: isFavorite ? "heart.fill" : "heart")
