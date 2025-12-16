@@ -10,14 +10,14 @@ import SwiftUI
 
 enum ProductCategory: String, Codable, Identifiable, CaseIterable {
     var id: String { rawValue }
-    
+
     case beauty = "Beauty"
     case fragrances = "Fragrances"
     case furniture = "Furniture"
     case groceries = "Groceries"
     case homeDecoration = "Home decoration"
     case kitchenAccessories = "Kitchen accessories"
-    case laptop = "Laptop"
+    case laptop = "Laptops"
     case mensShirts = "Mens shirts"
     case mensShoes = "Mens shoes"
     case mensWatches = "Mens watches"
@@ -35,7 +35,7 @@ enum ProductCategory: String, Codable, Identifiable, CaseIterable {
     case womensJewellery = "Womens jewellery"
     case womensShoes = "Womens shoes"
     case womensWatches = "Womens watches"
-    
+
     var imageName: String {
         switch self {
         case .beauty:

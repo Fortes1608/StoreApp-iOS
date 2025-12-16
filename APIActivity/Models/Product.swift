@@ -134,3 +134,11 @@ extension Product {
         )
     }
 }
+
+extension Product {
+    var category: ProductCategory? {
+        ProductCategory(rawValue: categoryAPI)
+    }
+}
+
+

@@ -108,6 +108,17 @@
         }
       }
     },
+    "beauty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beleza"
+          }
+        }
+      }
+    },
     "Beauty" : {
       "extractionState" : "manual",
       "localizations" : {
