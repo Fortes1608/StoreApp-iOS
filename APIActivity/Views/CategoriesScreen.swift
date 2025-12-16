@@ -127,6 +127,9 @@ struct CategoriesScreen: View {
         
         @Binding var searchText: String
         
+        @Environment(\.horizontalSizeClass) var horizontalSizeClass
+        @Environment(\.verticalSizeClass) var verticalSizeClass
+        
         private var categories: [ProductCategory] {
             ProductCategory.allCases
         }
@@ -140,6 +143,10 @@ struct CategoriesScreen: View {
             }
         }
         
+        private var itemsToShow: Int {
+            verticalSizeClass == .compact ? 8 : 11
+        }
+        
         var body: some View {
             NavigationStack {
                 VStack(spacing: 24) {
@@ -148,14 +155,15 @@ struct CategoriesScreen: View {
                             .foregroundColor(.secondary)
                         TextField("Search", text: $searchText)
                             .textFieldStyle(.plain)
-                        
                     }
                     .navigationTitle("Categories")
                     .padding(8)
                     .background(Color(.systemGray6))
                     .cornerRadius(10)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
                         LazyHStack(spacing: 16) {
-                            ForEach(filteredCategories.prefix(8)) { category in
+                            ForEach(filteredCategories) { category in
                                 NavigationLink {
                                     CategoryScreen(selectedTab: $selectedTab, productData: productData, viewModel: viewModel, productCategory: category)
                                 } label: {
@@ -164,6 +172,8 @@ struct CategoriesScreen: View {
                                 .buttonStyle(PlainButtonStyle())
                             }
                         }
+                        .padding(.horizontal, 4)
+                    }
                     .frame(height: 110)
                     
                     List(filteredCategories.prefix(8)) { category in
@@ -175,24 +185,13 @@ struct CategoriesScreen: View {
                                 .foregroundStyle(.primary)
                                 .multilineTextAlignment(.leading)
                                 .padding(.vertical, 16)
-                            
                         }
-                        
                     }
-                    
                     .listStyle(.plain)
                 }
-                
                 .background(Color(.systemBackground))
+                .padding(.horizontal, 32)
             }
-            .padding(.horizontal, 32)
-
-            
         }
     }
 }
-//
-//#Preview {
-//    CategoriesScreen(viewModel: ProductViewModel(service: ProductService()))
-//}
-//
